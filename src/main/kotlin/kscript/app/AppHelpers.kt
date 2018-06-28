@@ -244,14 +244,13 @@ sourceSets.main.java.srcDirs 'src'
         // also symlink all includes
         includeURLs.distinctBy { it.fileName() }
           .forEach {
-            val includeFileName = it.fileName()
-                        
+            
             val includeFile = when {
                 it.protocol == "file" -> File(it.toURI())
                 else -> fetchFromURL(it.toString())
             }
 
-            createSymLink(File(this, includeFileName), includeFile)
+            createSymLink(File(this, it.fileName()), includeFile)
         }
     }
 
