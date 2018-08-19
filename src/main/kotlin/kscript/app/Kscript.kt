@@ -20,7 +20,7 @@ import kotlin.system.exitProcess
  * @author Holger Brandl
  */
 
-const val KSCRIPT_VERSION = "2.4.4"
+const val KSCRIPT_VERSION = "2.4.5"
 
 val selfName = System.getenv("CUSTOM_KSCRIPT_NAME") ?: "kscript"
 
@@ -51,7 +51,8 @@ Version   : v$KSCRIPT_VERSION
 Website   : https://github.com/holgerbrandl/kscript
 """.trim()
 
-val KSCRIPT_CACHE_DIR = File(System.getenv("HOME")!!, ".kscript")
+// see https://stackoverflow.com/questions/585534/what-is-the-best-way-to-find-the-users-home-directory-in-java
+val KSCRIPT_CACHE_DIR = File(System.getProperty("user.home")!!, ".kscript")
 
 // use lazy here prevent empty dirs for regular scripts https://github.com/holgerbrandl/kscript/issues/130
 val SCRIPT_TEMP_DIR by lazy { createTempDir() }
@@ -180,8 +181,9 @@ fun main(args: Array<String>) {
     }
 
     // Capitalize first letter and get rid of dashes (since this is what kotlin compiler is doing for the wrapper to create a valid java class name)
+    // For valid characters see https://stackoverflow.com/questions/4814040/allowed-characters-in-filename
     val className = scriptFile.nameWithoutExtension
-        .replace("[.-]".toRegex(), "_")
+        .replace("[^A-Za-z0-9]".toRegex(), "_")
         .capitalize()
 
 

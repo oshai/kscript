@@ -41,7 +41,7 @@ Taken all these features together, `kscript` provides an easy-to-use, very flexi
 Installation
 ------------
 
-To use `kscript` just Kotlin and Maven are required. To [install Kotlin](https://kotlinlang.org/docs/tutorials/command-line.html) we recommend [sdkman](http://sdkman.io/install.html):
+To use `kscript` just Kotlin and Maven are required. To [install Kotlin](https://kotlinlang.org/docs/tutorials/command-line.html) we recommend [sdkman](http://sdkman.io/install):
 ```
 curl -s "https://get.sdkman.io" | bash  # install sdkman
 source ~/.bash_profile                  # add sdkman to PATH
@@ -73,10 +73,15 @@ If you have Kotlin and Maven already and you would like to install the latest `k
 #### Installation with Homebrew
 
 On MacOS you can install `kscript` also with [Homebrew](https://brew.sh/)
-```
+```bash
 brew install holgerbrandl/tap/kscript
 ```
 
+To upgrade to latest version
+```bash
+brew update
+brew upgrade holgerbrandl/tap/kscript
+```
 #### Build it yourself
 
 To build `kscript` yourself, simply clone the repo and do
@@ -273,7 +278,7 @@ class Bar{
     }
 }
 
-fun main(args: Array<String>) =  println("main was called")
+fun main(args: Array<String>) = println("main was called")
 ```
 
 To run top-level main instead we would use `//ENTRY examples.FooKt`
@@ -340,7 +345,7 @@ Text Processing Mode
 `kscript` can be used as a speedier and more flexible substitute for built-in terminal text tools such as `awk` or `sed`. Its text processing mode can be enabled with `-t` or `--text`. If so, `kscript` will
 
 * Declare `com.github.holgerbrandl:kscript-support:1.2.4` as dependency for the script. This [support library](https://github.com/holgerbrandl/kscript-support-api) eases the writing of Kotlin scriptlets for text-processing. It includes solutions to common use-cases like argument parsing, data streaming, IO utilities, and various iterators to streamline the writing of scriptlets for text processing.
-* Import the  `kscript.*` namespace
+* Import the `kscript.*` namespace
 * Define variable `val lines = kscript.text.StreamUtilKt.resolveArgFile(args)` which returns an iterator over the lines in the first input argument of the script, or the standard input if no file arguments are provided to the script
 
 
@@ -356,7 +361,7 @@ cat some_file | kscript -t 'lines
 
 In this example, the extension method [`Iterable<String>.print()`](https://github.com/holgerbrandl/kscript-support-api/blob/master/src/main/kotlin/kscript/text/StreamUtil.kt#L34) to print the lines to stdout comes from the support API. The rest is stdlib Kotlin.
 
- For more  examples using the support library see this [blog post](http://holgerbrandl.github.io/kotlin/2017/05/08/kscript_as_awk_substitute.html).
+ For more examples using the support library see this [blog post](http://holgerbrandl.github.io/kotlin/2017/05/08/kscript_as_awk_substitute.html).
 
 Treat yourself a REPL with `--interactive`
 ------------------------------------------
@@ -400,7 +405,7 @@ Artifacts and versions will differ between scripts, so it is hard to maintain th
 ```bash
 kscript --idea CountRecords.kts
 ```
-This will open [IntelliJ IDEA](https://www.jetbrains.com/idea/) with a minimalistic project containing just your (1) `<script>` and  (2) a generated `gradle.build` file:
+This will open [IntelliJ IDEA](https://www.jetbrains.com/idea/) with a minimalistic project containing just your (1) `<script>` and (2) a generated `gradle.build` file:
 
 ![](misc/readme_images/minus_idea.png)
 
@@ -433,7 +438,7 @@ print("hello kotlin!")
 is a valid Kotlin `kts` script. Plain and simple, no `main`, no `companion`, just a few bits of code.
 
 
-### Does `kscript` also work for regular kotlin `.kt` source files  with a `main` as entry point?
+### Does `kscript` also work for regular kotlin `.kt` source files with a `main` as entry point?
 
 Yes, (since v1.6) you can run kotlin source files through `kscript`. By default it will assume a top-level `main` method as entry-point.
 
@@ -473,19 +478,24 @@ Support
 
 Feel welcome to post ideas and suggestions to our [tracker](https://github.com/holgerbrandl/kscript/issues).
 
-More advanced use-cases are documented in the  [complementary user guide](docs/user_guide.md)
+More advanced use-cases are documented in the [complementary user guide](docs/user_guide.md)
 
 How to contribute?
 ------------------
 
-We always welcome pull requests. :-)
+We always welcome pull requests and trouble tickets. :-)
 
-You could also show your support by upvoting `kscript` here on github, or by voting for issues in Intellij IDEA which impact  `kscript`ing. Here are our top 3 tickets/annoyances that we would love to see fixed:
 
-1. [KT-11618](https://youtrack.jetbrains.com/issue/KT-11618) Idea does not allow to run scripts with dependencies
-2. [KT-15019](https://youtrack.jetbrains.com/issue/KT-15019) Editor: `args` reference in .kts file is red
-3. [KT-13347](https://youtrack.jetbrains.com/issue/KT-13347) Good code is red in injected kotlin language snippets
+Help to spread the word. Great community articles about `kscript` include
+* [Type-safety in the shell with kscript](https://medium.com/@OhadShai/type-safety-in-the-shell-with-kscript-7dd40d022537)
+* [Using Kotlin kscript for Preprocessing Data](https://medium.com/@kenkyee/using-kotlin-kscript-for-preprocessing-data-1dbff4eae292)
+* [kscript as substitute for awk](https://holgerbrandl.github.io/kotlin/2017/05/08/kscript_as_awk_substitute.html)
 
+
+You could also show your support by upvoting `kscript` here on github, or by voting for issues in Intellij IDEA which impact `kscript`ing. Here are our top 2 tickets/annoyances that we would love to see fixed:
+
+* [KT-11473](https://youtrack.jetbrains.com/issue/KT-11473) Idea does not allow to debug scripts using the builtin debugger
+* [KT-13347](https://youtrack.jetbrains.com/issue/KT-13347) Good code is red in injected kotlin language snippets
 
 
 To allow for more interactive script development, you could also vote/comment on the most annoying REPL issues.
@@ -494,19 +504,14 @@ To allow for more interactive script development, you could also vote/comment on
 * [KT-11409](https://youtrack.jetbrains.com/issue/KT-11409) Allow to "Send Selection To Kotlin Console"
 
 
-
-
-
-
-
 Acknowledgements
 ----------------
 
 The initial version of `kscript` was kindly contributed by [Oscar Gonzalez](https://github.com/oskargb).
 
-Special thanks to [Ilan Pillemer](https://github.com/ilanpillemer), [Andrey Mischenko ](https://github.com/gildor), [Stephen Byrne](https://github.com/stephenbyrne-mfj), [Eugene Susla](https://github.com/EugeneSusla) and [Eli Hart](https://github.com/elihart) for [contributing](https://github.com/holgerbrandl/kscript/graphs/contributors) PRs to this repo.
+Special thanks to [Ilan Pillemer](https://github.com/ilanpillemer), [Andrey Mischenko ](https://github.com/gildor), [Stephen Byrne](https://github.com/stephenbyrne-mfj), [Eugene Susla](https://github.com/EugeneSusla), [Eli Hart](https://github.com/elihart) and [oshai](https://github.com/oshai) for [contributing](https://github.com/holgerbrandl/kscript/graphs/contributors) PRs to this repo.
 
 Thanks also to the [Scionics Computer Innovation GmbH](https://www.scionics.com/) and the [MPI-CBG](http://www.mpi-cbg.de) for supporting this project.
 
-`kscript` was inspired by [kotlin-script](https://github.com/andrewoma/kotlin-script) which is another great way to do scripting in Kotlin.
+`kscript` was inspired by [kotlin-script](https://github.com/andrewoma/kotlin-script) which is another great way (now deprecated) to do scripting in Kotlin.
 
