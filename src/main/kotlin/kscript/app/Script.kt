@@ -70,10 +70,11 @@ data class Script(val lines: List<String>, val extension: String = "kts") : Iter
     }
 }
 
+private val KSCRIPT_DIRECTIVE_ANNO: List<Regex> = listOf("DependsOn", "KotlinOpts", "Include", "EntryPoint", "MavenRepository", "DependsOnMaven")
+    .map { "^@file:$it[(]".toRegex() }
 
 private fun isKscriptAnnotation(line: String) =
-    listOf("DependsOn", "KotlinOpts", "Include", "EntryPoint", "MavenRepository", "DependsOnMaven")
-        .any { line.contains("^@file:${it}[(]".toRegex()) }
+    KSCRIPT_DIRECTIVE_ANNO.any { line.contains(it) }
 
 
 //
